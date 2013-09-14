@@ -7,3 +7,6 @@ This bot copies posts along with their links from /r/Python from Reddit and post
 
 ###Access Token
 You need to get access token from twitter first. You can easily get them by going to dev.twitter.com/apps and registering an app. After registering you will have to change the access premissions of your app under the settings tab. After you get your access tokens and everything else just paste them in the beginning of the script where I have mentioned in the script. 
+
+###Documentation
+I have written a blogpost about how I made this and what everything means. You can read that [here](http://freepythontips.wordpress.com/2013/09/14/making-a-reddit-twitter-bot/)
