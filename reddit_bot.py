@@ -12,7 +12,7 @@ consumer_secret = 'YOUR CONSUMER SECRET'
 google_api_key = "YOUR GOOGLE API KEY"  
 
 subreddit_name = "subredditsimulator"
-tag_string= "#Python #reddit #bot"   #Place to put your hastags, etc. Must be <=116 char
+tag_string= "#Python #reddit #bot"   #Place to put your hastags, etc. Must be <=114 char
 num_tweets_before_stopping=20
 tweet_delay= 10						#in minutes
 
@@ -77,7 +77,7 @@ def add_id_to_file(id):
 
 def main():
 	count=0
-	if len(tag_string) > 116:
+	if len(tag_string) > 114:
 		print "[bot] Trailing string of tags is too long, please limit to <100 char"
 		return
 	while count <= num_tweets_before_stopping:
