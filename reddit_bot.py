@@ -4,20 +4,24 @@ import requests
 import tweepy
 import time
 
+# Twitter security codes
 access_token = 'YOUR ACCESS TOKEN'
 access_token_secret = 'YOUR ACCESS TOKEN SECRET'
 consumer_key = 'YOUR CONSUMER KEY'
 consumer_secret = 'YOUR CONSUMER SECRET'
 
+# without a proper key, this routine will default to Twitter's t.co shortening method
 google_api_key = "YOUR GOOGLE API KEY"  
 
-subreddit_name = "subredditsimulator"
-tag_string= "#Python #reddit #bot"   #Place to put your hastags, etc. Must be <=114 char
+# Options to customize your bot
+subreddit_name = "python"                 #Replace with your desired subreddit name
+tag_string= "#Python #reddit #bot"        #Place to put your hastags, etc. Must be <=114 char
 num_tweets_before_stopping=20
-tweet_delay= 10						#in minutes
+tweet_delay= 10						      #in minutes
 
+# Core functions begin here
 def strip_title(title, tag_len):
-	char_remaining=140-tag_len-26		# 26 = 24 for link + 2 for the spaces between concatenated strings
+	char_remaining=140-tag_len-26		  # 26 = 24 for link + 2 for the spaces between concatenated strings
 	if len(title) <= char_remaining:
 		return title
 	elif char_remaining >= 3:
@@ -44,12 +48,12 @@ def tweet_creator(subreddit_info):
 
 def setup_connection_reddit(subreddit):
 	print "[bot] setting up connection with Reddit"
-	r = praw.Reddit('yasoob_python reddit twitter bot '
+	r = praw.Reddit('yasoob_python reddit-twitter posting app'
 				'monitoring %s' %(subreddit)) 
 	subreddit = r.get_subreddit(subreddit)
 	return subreddit
 
-def shorten(url):		# Adjusted to include google api key authentication
+def shorten(url):		   # Adjusted to include google api key authentication
 	try:
 		headers = {'content-type': 'application/json'}
 		payload = {"longUrl": url}
@@ -58,14 +62,14 @@ def shorten(url):		# Adjusted to include google api key authentication
 		url = json.loads(r.text)['id']
 		print "[bot] Generating short link using goo.gl"
 	except:
-		print "[bot] improper google api key, defaulting to twitter's t.co shortner"
+		print "[bot] unverified google api key, defaulting to twitter's t.co shortner"
 	return url
 
 def duplicate_check(id):
 	found = 0
 	with open('posted_posts.txt', 'r') as file:
-		for line in file:
-			if id in line:
+		for line in file.read().splitlines():
+			if post_id == line:
 				found = 1
 	file.close()			
 	return found
@@ -78,7 +82,7 @@ def add_id_to_file(id):
 def main():
 	count=0
 	if len(tag_string) > 114:
-		print "[bot] Trailing string of tags is too long, please limit to <100 char"
+		print "[bot] Trailing string of tags is too long, please limit to <= 114 char"
 		return
 	while count <= num_tweets_before_stopping:
 		subreddit = setup_connection_reddit(subreddit_name)
